@@ -28,6 +28,13 @@ init()
 
 setup_questions()
 {
+  echo -e '╔════════════════════════════════════════╗'
+  echo -e '║ WireGuard server configurator          ║'
+  echo -e '║ Marcel Hoffs, 13.04.2021               ║'
+  echo -e '║ Version 1.0                            ║'
+  echo -e '╚════════════════════════════════════════╝'
+  echo ''
+
   # Server IP address
   while [ "$SERVER_IP" == '' ]; do
     read -r -p ' 1)  Server IP address [e.g. 10.0.0.1] : ' SERVER_IP
