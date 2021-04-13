@@ -4,6 +4,7 @@
 # Variables
 # ---------------------------------
 
+SERVER_CONFIG_FILE='wg0.conf'
 SERVER_IP=''
 SERVER_PORT=''
 SERVER_NETWORK=''
@@ -79,18 +80,18 @@ generate_server_keys()
 copy_template()
 {
   cp templates/template_server .
-  mv template_server wg0.conf
-  chmod 600 wg0.conf
+  mv template_server "$SERVER_CONFIG_FILE"
+  chmod 600 "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------
 
 replace_template_vars()
 {
-  sed -i -e "s/<server_ip>/""$SERVER_IP""/" /etc/locale.gen
-  sed -i -e "s/<server_port>/""$SERVER_PORT""/" /etc/locale.gen
-  sed -i -e "s/<server_network>/""$SERVER_NETWORK""/" /etc/locale.gen
-  sed -i -e "s/<server_private_key>/""$SERVER_PRIVATE_KEY""/" /etc/locale.gen
+  sed -i -e "s/<server_ip>/""$SERVER_IP""/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_port>/""$SERVER_PORT""/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_network>/""$SERVER_NETWORK""/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_private_key>/""$SERVER_PRIVATE_KEY""/" "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------
