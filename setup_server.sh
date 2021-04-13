@@ -76,5 +76,6 @@ replace_template_vars()
 
 setup_questions
 store_config
+generate_server_keys
 copy_template
 replace_template_vars
