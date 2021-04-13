@@ -72,7 +72,7 @@ generate_server_keys()
   mv server_publickey keys
 
   # Get the private key from the file
-  SERVER_PRIVATE_KEY=$(cat keys/server_privatekey)
+  SERVER_PRIVATE_KEY=$(<keys/server_privatekey)
 }
 
 # ---------------------------------
