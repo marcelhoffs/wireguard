@@ -66,8 +66,8 @@ store_config()
 generate_server_keys()
 {
   ./library/gen_keypair.sh server
-  mv library/server_privatekey keys
-  mv library/server_publickey keys
+  mv server_privatekey keys
+  mv server_publickey keys
 }
 
 # ---------------------------------
