@@ -21,7 +21,9 @@ setup_questions()
 
 copy_template()
 {
-  cp template\template_server .
+  cp template/template_server .
+  mv template_server wg0.conf
+  chmod 600 wg0.conf
 }
 
 replace_template_vars()
