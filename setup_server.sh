@@ -35,6 +35,7 @@ store_config()
 {
   # Create config directory
   mkdir config
+  mkdir keys
   
   # Store server IP in file
   echo "$SERVER_IP" > config/server_ip
@@ -47,6 +48,14 @@ store_config()
   
   # Set permissions
   chmod -R 600 config  
+  chmod -R 600 keys
+}
+
+generate_server_keys()
+{
+  ./library/gen_keypair.sh server
+  mv library/server_privatekey keys
+  mv library/server_publickey keys
 }
 
 copy_template()
