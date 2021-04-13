@@ -33,17 +33,20 @@ setup_questions()
 
 store_config()
 {
+  # Create config directory
+  mkdir config
+  
   # Store server IP in file
   echo "$SERVER_IP" > config/server_ip
-  chmod 600 config/server_ip
-
+  
   # Store server port in file
   echo "$SERVER_PORT" > config/server_port
-  chmod 600 config/server_port
-
+  
   # Store network interface
   echo "$SERVER_NETWORK" > config/server_network
-  chmod 600 config/server_network
+  
+  # Set permissions
+  chmod -R 600 config  
 }
 
 copy_template()
