@@ -65,9 +65,13 @@ store_config()
 
 generate_server_keys()
 {
+  # Generate the keypair
   ./library/gen_keypair.sh server
   mv server_privatekey keys
   mv server_publickey keys
+
+  # Get the private key from the file
+  SERVER_PRIVATE_KEY=$(cat keys/server_privatekey)
 }
 
 # ---------------------------------
@@ -83,7 +87,10 @@ copy_template()
 
 replace_template_vars()
 {
-  SERVER_IP=''
+  sed -i -e "s/<server_ip>/""$SERVER_IP""/" /etc/locale.gen
+  sed -i -e "s/<server_port>/""$SERVER_PORT""/" /etc/locale.gen
+  sed -i -e "s/<server_network>/""$SERVER_NETWORK""/" /etc/locale.gen
+  sed -i -e "s/<server_private_key>/""$SERVER_PRIVATE_KEY""/" /etc/locale.gen
 }
 
 # ---------------------------------
