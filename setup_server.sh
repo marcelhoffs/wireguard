@@ -66,5 +66,6 @@ replace_template_vars()
 # ---------------------------------
 
 setup_questions
+store_config
 copy_template
 replace_template_vars
