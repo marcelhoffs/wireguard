@@ -88,10 +88,10 @@ copy_template()
 
 replace_template_vars()
 {
-  sed -i -e "s/<server_ip>/""$SERVER_IP""/" "$SERVER_CONFIG_FILE"
-  sed -i -e "s/<server_port>/""$SERVER_PORT""/" "$SERVER_CONFIG_FILE"
-  sed -i -e "s/<server_network>/""$SERVER_NETWORK""/" "$SERVER_CONFIG_FILE"
-  sed -i -e "s/<server_private_key>/""$SERVER_PRIVATE_KEY""/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_ip>/$SERVER_IP/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_port>/$SERVER_PORT/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_network>/$SERVER_NETWORK/" "$SERVER_CONFIG_FILE"
+  sed -i -e "s/<server_private_key>/$SERVER_PRIVATE_KEY/" "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------
