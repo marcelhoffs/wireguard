@@ -51,6 +51,8 @@ setup_questions()
     read -r -p ' 3)  Network interface [e.g. eth0] : ' SERVER_NETWORK
     SERVER_NETWORK=${SERVER_NETWORK,,}
   done
+
+  echo ''
 }
 
 # ---------------------------------
