@@ -26,7 +26,7 @@ copy_template()
 
 replace_template_vars()
 {
-
+  SERVER_IP=''
 }
 
 # ---------------------------------
