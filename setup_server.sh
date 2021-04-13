@@ -12,6 +12,18 @@ SERVER_NETWORK=''
 # Functions
 # ---------------------------------
 
+init()
+{
+    # Make library executable
+    chmod -R +x library
+
+    # Create config directory
+    mkdir config
+    mkdir keys
+}
+
+# ---------------------------------
+
 setup_questions()
 {
   # Server IP address
@@ -31,12 +43,10 @@ setup_questions()
   done
 }
 
+# ---------------------------------
+
 store_config()
-{
-  # Create config directory
-  mkdir config
-  mkdir keys
-  
+{ 
   # Store server IP in file
   echo "$SERVER_IP" > config/server_ip
   
@@ -51,6 +61,8 @@ store_config()
   chmod -R 600 keys
 }
 
+# ---------------------------------
+
 generate_server_keys()
 {
   ./library/gen_keypair.sh server
@@ -58,12 +70,16 @@ generate_server_keys()
   mv library/server_publickey keys
 }
 
+# ---------------------------------
+
 copy_template()
 {
   cp templates/template_server .
   mv template_server wg0.conf
   chmod 600 wg0.conf
 }
+
+# ---------------------------------
 
 replace_template_vars()
 {
@@ -74,6 +90,7 @@ replace_template_vars()
 # Main
 # ---------------------------------
 
+init
 setup_questions
 store_config
 generate_server_keys
