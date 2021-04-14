@@ -41,7 +41,7 @@ setup_questions()
   # Client IP address
   while [ "$CLIENT_IP" == '' ]; do
     read -r -p ' 2)  Client IP address : ' CLIENT_IP
-    END_POINT=${CLIENT_IP,,}
+    CLIENT_IP=${CLIENT_IP,,}
   done
 
   # End Point
