@@ -128,17 +128,18 @@ generate_qr_code() {
 # ---------------------------------
 
 determine_ip() {
-    # Variables
-    i=0
+    j=0
+    IFS='.' read -ra ADDR <<< $CLIENT_IP
 
-    # Get the latest IP
-    while read -r part; do
-        IP_ADDR_ARRAY[i]="$part"
-        i=i+1
-    done < <(cat config/last_client_ip | sed -n 1'p' | tr '.' '\n')
+    for i in "${ADDR[@]}"; do
+      IP_ADDR_ARRAY[j]=$i
+      j=$((j+1))
+    done
 
-    IP_ADDR_ARRAY[3]=$IP_ADDR_ARRAY[3]+1
-    CLIENT_IP=$IP_ADDR_ARRAY[0]'.'$IP_ADDR_ARRAY[1]'.'$IP_ADDR_ARRAY[2]'.'$IP_ADDR_ARRAY[3]
+    # Increase by one
+    IP_ADDR_ARRAY[3]=$((${IP_ADDR_ARRAY[3]}+1))
+
+    CLIENT_IP="${IP_ADDR_ARRAY[0]}"".""${IP_ADDR_ARRAY[1]}"".""${IP_ADDR_ARRAY[2]}"".""${IP_ADDR_ARRAY[3]}"
 
     echo "$CLIENT_IP" >config/last_client_ip
     echo "New client IP: ""$CLIENT_IP"
