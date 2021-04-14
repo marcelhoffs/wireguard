@@ -6,6 +6,10 @@
 
 SERVER_NAME='SERVER'
 SERVER_CONFIG_FILE='wg0.conf'
+SERVER_IP=''
+SERVER_PORT=''
+SERVER_NETWORK=''
+DNS=''
 
 # ---------------------------------
 # Functions
