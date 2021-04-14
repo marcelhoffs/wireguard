@@ -6,7 +6,9 @@
 
 SERVER_PUBLIC_KEY=''
 CLIENT_PRIVATE_KEY=''
+CLIENT_PUBLIC_KEY=''
 CLIENT_NAME=''
+CLIENT_IP=''
 
 # ---------------------------------
 # Functions
@@ -34,6 +36,12 @@ setup_questions()
   while [ "$CLIENT_NAME" == '' ]; do
     read -r -p ' 1)  Client name [e.g. THINKPAD] : ' CLIENT_NAME
     CLIENT_NAME=${CLIENT_NAME^^}
+  done
+
+  # Client IP address
+  while [ "$CLIENT_IP" == '' ]; do
+    read -r -p ' 2)  Client IP address : ' CLIENT_IP
+    END_POINT=${CLIENT_IP,,}
   done
 
   # End Point
@@ -73,7 +81,7 @@ get_keys()
   SERVER_PUBLIC_KEY=$(<keys/SERVER_publickey)
 
   # Get the client private key from the file
-  SERVER_PUBLIC_KEY=$(<keys/"$NAME"_privatekey)
+  CLIENT_PUBLIC_KEY=$(<keys/"$NAME"_privatekey)
 }
 
 # ---------------------------------
@@ -81,12 +89,12 @@ get_keys()
 update_server_config()
 { 
   # Get server config file
-  SERVER_CONFIG_FILE$(<"config/server_config_file")
+  SERVER_CONFIG_FILE=$(<"config/server_config_file")
 
   echo "" >> "$SERVER_CONFIG_FILE"
   echo "[Peer]" >> "$SERVER_CONFIG_FILE"
   echo "# ""$CLIENT_NAME" >> "$SERVER_CONFIG_FILE"
-  echo "PublicKey = " >> "$SERVER_CONFIG_FILE"
+  echo "PublicKey = ""$CLIENT_PUBLIC_KEY" >> "$SERVER_CONFIG_FILE"
   echo "AllowedIPs = " >> "$SERVER_CONFIG_FILE"
 }
 
