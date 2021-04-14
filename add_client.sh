@@ -29,15 +29,9 @@ setup_questions() {
 
     # Client name
     while [ "$CLIENT_NAME" == '' ]; do
-        read -r -p ' 1)  Client name [e.g. THINKPAD] : ' CLIENT_NAME
+        read -r -p ' Client name [e.g. THINKPAD] : ' CLIENT_NAME
         CLIENT_NAME=${CLIENT_NAME,,}
     done
-
-    # Client IP address
-    #while [ "$CLIENT_IP" == '' ]; do
-    #    read -r -p ' 2)  Client IP address : ' CLIENT_IP
-    #    CLIENT_IP=${CLIENT_IP,,}
-    #done
 
     echo ''
 }
@@ -128,21 +122,25 @@ generate_qr_code() {
 # ---------------------------------
 
 determine_ip() {
+    # Variables
     j=0
-    IFS='.' read -ra ADDR <<< $CLIENT_IP
 
+    # Split client IP by dot
+    IFS='.' read -ra ADDR <<<$CLIENT_IP
     for i in "${ADDR[@]}"; do
-      IP_ADDR_ARRAY[j]=$i
-      j=$((j+1))
+        # Store ip parts in array
+        IP_ADDR_ARRAY[j]=$i
+        j=$((j + 1))
     done
 
-    # Increase by one
-    IP_ADDR_ARRAY[3]=$((${IP_ADDR_ARRAY[3]}+1))
+    # Increase by the last entry in the array by one
+    IP_ADDR_ARRAY[3]=$((${IP_ADDR_ARRAY[3]} + 1))
 
+    # Construct the new client ip
     CLIENT_IP="${IP_ADDR_ARRAY[0]}"".""${IP_ADDR_ARRAY[1]}"".""${IP_ADDR_ARRAY[2]}"".""${IP_ADDR_ARRAY[3]}"
 
+    # Write to last_client_ip
     echo "$CLIENT_IP" >config/last_client_ip
-    echo "New client IP: ""$CLIENT_IP"
 }
 
 # ---------------------------------
