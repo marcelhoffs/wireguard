@@ -98,14 +98,14 @@ generate_client_config()
 
   # Generating client config
   CLIENT_CONFIG_FILE="$NAME"".conf"
-  FULL_CLIENT_CONFIG_FILE="config/""$NAME"
+  FULL_CLIENT_CONFIG_FILE="config/""$CLIENT_CONFIG_FILE"
   echo " > Generating client config file: config/""$CLIENT_CONFIG_FILE" 
   
   echo "[Interface]" > "$FULL_CLIENT_CONFIG_FILE"
   echo "PrivateKey = ""$CLIENT_PRIVATE_KEY" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "Address = ""$CLIENT_IP""/32" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "DNS = 192.168.1.10" >> "$FULL_CLIENT_CONFIG_FILE"
-  echo ""
+  echo "" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "[Peer]" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "AllowedIPs = 0.0.0.0/0, ::/0" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "Endpoint = ""$END_POINT"":""$END_POINT_PORT" >> "$FULL_CLIENT_CONFIG_FILE"
