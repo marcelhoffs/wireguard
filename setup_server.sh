@@ -88,21 +88,14 @@ generate_server_keys()
 
 # ---------------------------------
 
-copy_template()
+generate_server_config()
 {
-  cp templates/template_server .
-  mv template_server "$SERVER_CONFIG_FILE"
-  chmod 600 "$SERVER_CONFIG_FILE"
-}
-
-# ---------------------------------
-
-replace_template_vars()
-{
-  sed -i -e "s/<server_ip>/$SERVER_IP/" "$SERVER_CONFIG_FILE"
-  sed -i -e "s/<server_port>/$SERVER_PORT/" "$SERVER_CONFIG_FILE"
-  sed -i -e "s/<server_network>/$SERVER_NETWORK/" "$SERVER_CONFIG_FILE"
-  sed -i -e "s/<server_private_key>/$SERVER_PRIVATE_KEY/" "$SERVER_CONFIG_FILE"
+  echo "[Interface]" > "$SERVER_CONFIG_FILE"
+  echo "Address = ""$SERVER_IP" >> "$SERVER_CONFIG_FILE"
+  echo "ListenPort = ""$SERVER_PORT" >> "$SERVER_CONFIG_FILE"
+  echo "PrivateKey = ""$SERVER_PRIVATE_KEY" >> "$SERVER_CONFIG_FILE"
+  echo "PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >> "$SERVER_CONFIG_FILE"
+  echo "PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >> "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------
@@ -113,5 +106,4 @@ init
 setup_questions
 store_config
 generate_server_keys
-copy_template
-replace_template_vars
+generate_server_config
