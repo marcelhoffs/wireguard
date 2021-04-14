@@ -46,13 +46,13 @@ setup_questions()
 
   # End Point
   while [ "$END_POINT" == '' ]; do
-    read -r -p ' 2)  End point [e.g. vpn.example.com, an ip address] : ' END_POINT
+    read -r -p ' 3)  End point [e.g. vpn.example.com, an ip address] : ' END_POINT
     END_POINT=${END_POINT,,}
   done
 
   # End Point port
   while [ "$END_POINT_PORT" == '' ]; do
-    read -r -p ' 3)  End point port [e.g. 4000] : ' END_POINT_PORT
+    read -r -p ' 4)  End point port [e.g. 4000] : ' END_POINT_PORT
     END_POINT_PORT=${END_POINT_PORT,,}
   done
 
@@ -95,7 +95,7 @@ update_server_config()
   echo "[Peer]" >> "$SERVER_CONFIG_FILE"
   echo "# ""$CLIENT_NAME" >> "$SERVER_CONFIG_FILE"
   echo "PublicKey = ""$CLIENT_PUBLIC_KEY" >> "$SERVER_CONFIG_FILE"
-  echo "AllowedIPs = " >> "$SERVER_CONFIG_FILE"
+  echo "AllowedIPs = ""$CLIENT_IP""/32" >> "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------

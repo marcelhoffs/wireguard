@@ -22,6 +22,7 @@ init()
 
     # Make library executable
     chmod -R +x library
+    chmod +x add_client.sh
 
     # Create config directory
     mkdir config
