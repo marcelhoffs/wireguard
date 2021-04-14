@@ -1,9 +1,0 @@
-[Interface]
-PrivateKey = GGQmuDsXyVyQKUFDEMt9I9pTEe57+uH053TbARKD3m4=
-Address = 10.0.0.5/32
-DNS = 192.168.1.10
-
-[Peer]
-PublicKey = M6E9iaBaAECOMoqFpTp7F6mOBCfFIqH0UOzv43fmdQo=
-AllowedIPs = 0.0.0.0/0, ::/0
-Endpoint = vpn.redboxconsulting.be:3581

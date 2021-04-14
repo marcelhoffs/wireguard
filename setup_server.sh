@@ -16,6 +16,9 @@ SERVER_PRIVATE_KEY=''
 
 init()
 {
+    # Clear the screen
+    clear
+    
     # Make library executable
     chmod -R +x library
 
