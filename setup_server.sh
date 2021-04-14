@@ -116,3 +116,4 @@ setup_questions
 store_config
 generate_server_keys
 generate_server_config
+echo ''
