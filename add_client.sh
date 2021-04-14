@@ -1,16 +1,6 @@
 #!/bin/bash
 
 # ---------------------------------
-# Variables
-# ---------------------------------
-
-SERVER_PUBLIC_KEY=''
-CLIENT_PRIVATE_KEY=''
-CLIENT_PUBLIC_KEY=''
-CLIENT_NAME=''
-CLIENT_IP=''
-
-# ---------------------------------
 # Functions
 # ---------------------------------
 
@@ -81,7 +71,8 @@ get_keys()
   SERVER_PUBLIC_KEY=$(<keys/SERVER_publickey)
 
   # Get the client private key from the file
-  CLIENT_PUBLIC_KEY=$(<keys/"$NAME"_privatekey)
+  CLIENT_PRIVATE_KEY=$(<keys/"$NAME"_privatekey)
+  CLIENT_PUBLIC_KEY=$(<keys/"$NAME"_publickey)
 }
 
 # ---------------------------------
@@ -90,12 +81,36 @@ update_server_config()
 { 
   # Get server config file
   SERVER_CONFIG_FILE=$(<"config/server_config_file")
+  echo " > Updating server configuration file: ""$SERVER_CONFIG_FILE" 
 
   echo "" >> "$SERVER_CONFIG_FILE"
   echo "[Peer]" >> "$SERVER_CONFIG_FILE"
   echo "# ""$CLIENT_NAME" >> "$SERVER_CONFIG_FILE"
   echo "PublicKey = ""$CLIENT_PUBLIC_KEY" >> "$SERVER_CONFIG_FILE"
   echo "AllowedIPs = ""$CLIENT_IP""/32" >> "$SERVER_CONFIG_FILE"
+}
+
+# ---------------------------------
+
+generate_client_config()
+{
+  NAME=$1
+
+  # Generating client config
+  CLIENT_CONFIG_FILE="$NAME"".conf"
+  FULL_CLIENT_CONFIG_FILE="config/""$NAME"
+  echo " > Generating client config file: config/""$CLIENT_CONFIG_FILE" 
+  
+  echo "[Interface]" > "$FULL_CLIENT_CONFIG_FILE"
+  echo "PrivateKey = ""$CLIENT_PRIVATE_KEY" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo "Address = ""$CLIENT_IP""/32" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo "DNS = 192.168.1.10" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo ""
+  echo "[Peer]" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo "AllowedIPs = 0.0.0.0/0, ::/0" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo "Endpoint = ""$END_POINT"":""$END_POINT_PORT" >> "$FULL_CLIENT_CONFIG_FILE"
+
+  chmod 600 "$FULL_CLIENT_CONFIG_FILE"
 }
 
 # ---------------------------------
@@ -107,5 +122,5 @@ setup_questions
 generate_client_keys "$CLIENT_NAME"
 get_keys "$CLIENT_NAME"
 update_server_config
-#generate_client_config
+generate_client_config "$CLIENT_NAME"
 echo ''
