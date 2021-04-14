@@ -6,6 +6,7 @@
 
 SERVER_PUBLIC_KEY=''
 CLIENT_PRIVATE_KEY=''
+CLIENT_NAME=''
 
 # ---------------------------------
 # Functions
@@ -69,10 +70,24 @@ get_keys()
   NAME=$1
 
   # Get the server public key from the file
-  SERVER_PUBLIC_KEY=$(<keys/server_publickey)
+  SERVER_PUBLIC_KEY=$(<keys/SERVER_publickey)
 
   # Get the client private key from the file
   SERVER_PUBLIC_KEY=$(<keys/"$NAME"_privatekey)
+}
+
+# ---------------------------------
+
+update_server_config()
+{ 
+  # Get server config file
+  SERVER_CONFIG_FILE$(<"config/server_config_file")
+
+  echo "" >> "$SERVER_CONFIG_FILE"
+  echo "[Peer]" >> "$SERVER_CONFIG_FILE"
+  echo "# ""$CLIENT_NAME" >> "$SERVER_CONFIG_FILE"
+  echo "PublicKey = " >> "$SERVER_CONFIG_FILE"
+  echo "AllowedIPs = " >> "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------
@@ -83,6 +98,6 @@ init
 setup_questions
 generate_client_keys "$CLIENT_NAME"
 get_keys "$CLIENT_NAME"
+update_server_config
 #generate_client_config
-#update_server_config
 echo ''

@@ -4,6 +4,7 @@
 # Variables
 # ---------------------------------
 
+SERVER_NAME='SERVER'
 SERVER_CONFIG_FILE='wg0.conf'
 SERVER_IP=''
 SERVER_PORT=''
@@ -73,6 +74,9 @@ store_config()
   
   # Store network interface
   echo "$SERVER_NETWORK" > config/server_network
+
+  # Store server config file
+  echo "$SERVER_CONFIG_FILE" > config/server_config_file
   
   # Set permissions
   chmod -R 600 config  
@@ -83,13 +87,15 @@ store_config()
 
 generate_server_keys()
 {
+  NAME=$1
+
   # Generate the keypair
-  ./library/gen_keypair.sh server
-  mv server_privatekey keys
-  mv server_publickey keys
+  ./library/gen_keypair.sh "$NAME"
+  mv "$NAME"_privatekey keys
+  mv "$NAME"_publickey keys  
 
   # Get the private key from the file
-  SERVER_PRIVATE_KEY=$(<keys/server_privatekey)
+  SERVER_PRIVATE_KEY=$(<keys/"$NAME"_privatekey)
 }
 
 # ---------------------------------
@@ -116,6 +122,6 @@ generate_server_config()
 init
 setup_questions
 store_config
-generate_server_keys
+generate_server_keys "$SERVER_NAME"
 generate_server_config
 echo ''
