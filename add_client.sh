@@ -94,13 +94,14 @@ get_data()
 
 update_server_config()
 { 
-  # Get server config file
+  NAME=$1
   
+  # Update server config file
   echo " > Updating server configuration file: ""$SERVER_CONFIG_FILE" 
 
   echo "" >> "$SERVER_CONFIG_FILE"
   echo "[Peer]" >> "$SERVER_CONFIG_FILE"
-  echo "# ""$CLIENT_NAME" >> "$SERVER_CONFIG_FILE"
+  echo "# ""$NAME" >> "$SERVER_CONFIG_FILE"
   echo "PublicKey = ""$CLIENT_PUBLIC_KEY" >> "$SERVER_CONFIG_FILE"
   echo "AllowedIPs = ""$CLIENT_IP""/32" >> "$SERVER_CONFIG_FILE"
 }
@@ -129,6 +130,16 @@ generate_client_config()
 }
 
 # ---------------------------------
+generate_qr_code()
+{
+  NAME=$1    
+
+  # Generate QR Code
+  echo ""
+  ./library/gen_qr_code.sh "$FULL_CLIENT_CONFIG_FILE"
+}
+
+# ---------------------------------
 # Main
 # ---------------------------------
 
@@ -136,6 +147,6 @@ init
 setup_questions
 generate_client_keys "$CLIENT_NAME"
 get_data "$CLIENT_NAME"
-update_server_config
+update_server_config "$CLIENT_NAME"
 generate_client_config "$CLIENT_NAME"
-echo ''
+generate_qr_code "$CLIENT_NAME"
