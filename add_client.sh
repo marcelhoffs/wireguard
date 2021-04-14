@@ -59,7 +59,7 @@ get_data() {
     NAME=$1
 
     # Get the server public key from the file
-    SERVER_PUBLIC_KEY=$(<keys/SERVER_publickey)
+    SERVER_PUBLIC_KEY=$(<keys/server_publickey)
 
     # Get the client private key from the file
     CLIENT_PRIVATE_KEY=$(<keys/"$NAME"_privatekey)
@@ -113,6 +113,7 @@ generate_client_config() {
 }
 
 # ---------------------------------
+
 generate_qr_code() {
     NAME=$1
 

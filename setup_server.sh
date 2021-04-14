@@ -4,7 +4,6 @@
 # Variables
 # ---------------------------------
 
-SERVER_NAME='server'
 SERVER_CONFIG_FILE='wg0.conf'
 SERVER_IP=''
 SERVER_PORT=''
@@ -110,15 +109,13 @@ store_config() {
 # ---------------------------------
 
 generate_server_keys() {
-  NAME=$1
-
   # Generate the keypair
-  ./library/gen_keypair.sh "$NAME"
-  mv "$NAME"_privatekey keys
-  mv "$NAME"_publickey keys
+  ./library/gen_keypair.sh server
+  mv server_privatekey keys
+  mv server_publickey keys
 
   # Get the private key from the file
-  SERVER_PRIVATE_KEY=$(<keys/"$NAME"_privatekey)
+  SERVER_PRIVATE_KEY=$(<keys/server_privatekey)
 }
 
 # ---------------------------------
@@ -144,6 +141,6 @@ generate_server_config() {
 init
 setup_questions
 store_config
-generate_server_keys "$SERVER_NAME"
+generate_server_keys
 generate_server_config
 echo ''
