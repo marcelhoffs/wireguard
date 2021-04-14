@@ -26,6 +26,7 @@ init()
 
     # Create config directory
     mkdir config
+    mkdir client
     mkdir keys
 }
 

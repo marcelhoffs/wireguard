@@ -98,7 +98,7 @@ generate_client_config()
 
   # Generating client config
   CLIENT_CONFIG_FILE="$NAME"".conf"
-  FULL_CLIENT_CONFIG_FILE="config/""$CLIENT_CONFIG_FILE"
+  FULL_CLIENT_CONFIG_FILE="client/""$CLIENT_CONFIG_FILE"
   echo " > Generating client config file: config/""$CLIENT_CONFIG_FILE" 
   
   echo "[Interface]" > "$FULL_CLIENT_CONFIG_FILE"
