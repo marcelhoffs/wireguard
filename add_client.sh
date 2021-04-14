@@ -63,7 +63,7 @@ generate_client_keys()
 
 # ---------------------------------
 
-get_keys()
+get_data()
 {
   NAME=$1
 
@@ -73,6 +73,12 @@ get_keys()
   # Get the client private key from the file
   CLIENT_PRIVATE_KEY=$(<keys/"$NAME"_privatekey)
   CLIENT_PUBLIC_KEY=$(<keys/"$NAME"_publickey)
+
+  # Get server config file
+  SERVER_CONFIG_FILE=$(<"config/server_config_file")
+
+  # Get dNS
+  DNS=$(<"config/dns")
 }
 
 # ---------------------------------
@@ -80,7 +86,7 @@ get_keys()
 update_server_config()
 { 
   # Get server config file
-  SERVER_CONFIG_FILE=$(<"config/server_config_file")
+  
   echo " > Updating server configuration file: ""$SERVER_CONFIG_FILE" 
 
   echo "" >> "$SERVER_CONFIG_FILE"
@@ -104,7 +110,7 @@ generate_client_config()
   echo "[Interface]" > "$FULL_CLIENT_CONFIG_FILE"
   echo "PrivateKey = ""$CLIENT_PRIVATE_KEY" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "Address = ""$CLIENT_IP""/32" >> "$FULL_CLIENT_CONFIG_FILE"
-  echo "DNS = 192.168.1.10" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo "DNS = ""$DNS" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "[Peer]" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "AllowedIPs = 0.0.0.0/0, ::/0" >> "$FULL_CLIENT_CONFIG_FILE"
@@ -120,7 +126,7 @@ generate_client_config()
 init
 setup_questions
 generate_client_keys "$CLIENT_NAME"
-get_keys "$CLIENT_NAME"
+get_data "$CLIENT_NAME"
 update_server_config
 generate_client_config "$CLIENT_NAME"
 echo ''

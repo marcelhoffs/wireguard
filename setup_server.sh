@@ -6,10 +6,6 @@
 
 SERVER_NAME='SERVER'
 SERVER_CONFIG_FILE='wg0.conf'
-SERVER_IP=''
-SERVER_PORT=''
-SERVER_NETWORK=''
-SERVER_PRIVATE_KEY=''
 
 # ---------------------------------
 # Functions
@@ -58,6 +54,11 @@ setup_questions()
     SERVER_NETWORK=${SERVER_NETWORK,,}
   done
 
+  # DNS
+  while [ "$DNS" == '' ]; do
+    read -r -p ' 1)  What DNS to use [e.g. 1.1.1.1] : ' DNS
+  done
+
   echo ''
 }
 
@@ -79,6 +80,9 @@ store_config()
 
   # Store server config file
   echo "$SERVER_CONFIG_FILE" > config/server_config_file
+
+  # Store DNS settings
+  echo "$DNS" > config/dns
   
   # Set permissions
   chmod -R 600 config  
