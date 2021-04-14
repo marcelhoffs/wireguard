@@ -63,7 +63,7 @@ setup_questions()
 store_config()
 { 
   # Store config
-  echo "Storing configuration in config directory"
+  echo " > Storing configuration in config directory"
 
   # Store server IP in file
   echo "$SERVER_IP" > config/server_ip
@@ -97,7 +97,7 @@ generate_server_keys()
 generate_server_config()
 {
   # Generate the server configuration file
-  echo "Generating server configuration file: ""$SERVER_CONFIG_FILE" 
+  echo " > Generating server configuration file: ""$SERVER_CONFIG_FILE" 
 
   echo "[Interface]" > "$SERVER_CONFIG_FILE"
   echo "Address = ""$SERVER_IP" >> "$SERVER_CONFIG_FILE"
