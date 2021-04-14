@@ -86,6 +86,9 @@ store_config() {
   # Store server IP in file
   echo "$SERVER_IP" >config/server_ip
 
+  # Store server IP in file
+  echo "$SERVER_IP" >config/last_client_ip
+
   # Store server port in file
   echo "$SERVER_PORT" >config/server_port
 

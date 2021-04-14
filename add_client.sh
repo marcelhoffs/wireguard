@@ -34,10 +34,10 @@ setup_questions() {
     done
 
     # Client IP address
-    while [ "$CLIENT_IP" == '' ]; do
-        read -r -p ' 2)  Client IP address : ' CLIENT_IP
-        CLIENT_IP=${CLIENT_IP,,}
-    done
+    #while [ "$CLIENT_IP" == '' ]; do
+    #    read -r -p ' 2)  Client IP address : ' CLIENT_IP
+    #    CLIENT_IP=${CLIENT_IP,,}
+    #done
 
     echo ''
 }
@@ -73,6 +73,9 @@ get_data() {
 
     # Get End Point
     END_POINT=$(<"config/endpoint")
+
+    # Get last client IP
+    CLIENT_IP=$(<"config/last_client_ip")
 }
 
 # ---------------------------------
@@ -123,6 +126,25 @@ generate_qr_code() {
 }
 
 # ---------------------------------
+
+determine_ip() {
+    # Variables
+    i=0
+
+    # Get the latest IP
+    while read -r part; do
+        IP_ADDR_ARRAY[i]="$part"
+        i=i+1
+    done < <(cat config/last_client_ip | sed -n 1'p' | tr '.' '\n')
+
+    IP_ADDR_ARRAY[3]=$IP_ADDR_ARRAY[3]+1
+    CLIENT_IP=$IP_ADDR_ARRAY[0]'.'$IP_ADDR_ARRAY[1]'.'$IP_ADDR_ARRAY[2]'.'$IP_ADDR_ARRAY[3]
+
+    echo "$CLIENT_IP" >config/last_client_ip
+    echo "New client IP: ""$CLIENT_IP"
+}
+
+# ---------------------------------
 # Main
 # ---------------------------------
 
@@ -130,6 +152,7 @@ init
 setup_questions
 generate_client_keys "$CLIENT_NAME"
 get_data "$CLIENT_NAME"
+determine_ip
 update_server_config "$CLIENT_NAME"
 generate_client_config "$CLIENT_NAME"
 generate_qr_code "$CLIENT_NAME"
