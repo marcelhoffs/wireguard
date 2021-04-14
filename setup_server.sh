@@ -105,6 +105,8 @@ generate_server_config()
   echo "PrivateKey = ""$SERVER_PRIVATE_KEY" >> "$SERVER_CONFIG_FILE"
   echo "PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >> "$SERVER_CONFIG_FILE"
   echo "PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >> "$SERVER_CONFIG_FILE"
+
+  chown 600 "$SERVER_CONFIG_FILE"
 }
 
 # ---------------------------------
