@@ -136,7 +136,7 @@ generate_qr_code()
 
   # Generate QR Code
   echo ""
-  ./library/gen_qr_code.sh "$FULL_CLIENT_CONFIG_FILE"
+  ./library/gen_qrcode.sh "$FULL_CLIENT_CONFIG_FILE"
 }
 
 # ---------------------------------
