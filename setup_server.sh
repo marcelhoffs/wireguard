@@ -4,7 +4,7 @@
 # Variables
 # ---------------------------------
 
-SERVER_NAME='SERVER'
+SERVER_NAME='server'
 SERVER_CONFIG_FILE='wg0.conf'
 SERVER_IP=''
 SERVER_PORT=''
