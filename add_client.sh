@@ -32,7 +32,7 @@ setup_questions()
   # Client name
   while [ "$CLIENT_NAME" == '' ]; do
     read -r -p ' 1)  Client name [e.g. THINKPAD] : ' CLIENT_NAME
-    CLIENT_NAME=${CLIENT_NAME^^}
+    CLIENT_NAME=${CLIENT_NAME,,}
   done
 
   # Client IP address
