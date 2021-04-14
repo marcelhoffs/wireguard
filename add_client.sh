@@ -6,8 +6,6 @@
 
 CLIENT_NAME=''
 CLIENT_IP=''
-END_POINT=''
-END_POINT_PORT=''
 
 # ---------------------------------
 # Functions
@@ -43,18 +41,6 @@ setup_questions()
     CLIENT_IP=${CLIENT_IP,,}
   done
 
-  # End Point
-  while [ "$END_POINT" == '' ]; do
-    read -r -p ' 3)  End point [e.g. vpn.example.com, an ip address] : ' END_POINT
-    END_POINT=${END_POINT,,}
-  done
-
-  # End Point port
-  while [ "$END_POINT_PORT" == '' ]; do
-    read -r -p ' 4)  End point port [e.g. 4000] : ' END_POINT_PORT
-    END_POINT_PORT=${END_POINT_PORT,,}
-  done
-
   echo ''
 }
 
@@ -86,8 +72,11 @@ get_data()
   # Get server config file
   SERVER_CONFIG_FILE=$(<"config/server_config_file")
 
-  # Get dNS
+  # Get DNS
   DNS=$(<"config/dns")
+
+  # Get End Point
+  END_POINT=$(<"config/endpoint")
 }
 
 # ---------------------------------
@@ -124,7 +113,7 @@ generate_client_config()
   echo "" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "[Peer]" >> "$FULL_CLIENT_CONFIG_FILE"
   echo "AllowedIPs = 0.0.0.0/0, ::/0" >> "$FULL_CLIENT_CONFIG_FILE"
-  echo "Endpoint = ""$END_POINT"":""$END_POINT_PORT" >> "$FULL_CLIENT_CONFIG_FILE"
+  echo "Endpoint = ""$END_POINT" >> "$FULL_CLIENT_CONFIG_FILE"
 
   chmod 600 "$FULL_CLIENT_CONFIG_FILE"
 }

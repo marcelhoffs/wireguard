@@ -10,6 +10,8 @@ SERVER_IP=''
 SERVER_PORT=''
 SERVER_NETWORK=''
 DNS=''
+END_POINT=''
+END_POINT_PORT=''
 
 # ---------------------------------
 # Functions
@@ -60,7 +62,19 @@ setup_questions()
 
   # DNS
   while [ "$DNS" == '' ]; do
-    read -r -p ' 1)  What DNS to use [e.g. 1.1.1.1] : ' DNS
+    read -r -p ' 4)  What DNS to use [e.g. 1.1.1.1] : ' DNS
+  done
+
+   # End Point
+  while [ "$END_POINT" == '' ]; do
+    read -r -p ' 5)  End point [e.g. vpn.example.com, an ip address] : ' END_POINT
+    END_POINT=${END_POINT,,}
+  done
+
+  # End Point port
+  while [ "$END_POINT_PORT" == '' ]; do
+    read -r -p ' 6)  End point port [e.g. 4000] : ' END_POINT_PORT
+    END_POINT_PORT=${END_POINT_PORT,,}
   done
 
   echo ''
@@ -88,6 +102,9 @@ store_config()
   # Store DNS settings
   echo "$DNS" > config/dns
   
+   # Store End Point
+  echo "$END_POINT"":""$END_POINT_PORT" > config/endpoint
+
   # Set permissions
   chmod -R 600 config  
   chmod -R 600 keys
