@@ -32,6 +32,5 @@ if [ $# -eq 5 ]; then
     generate_config
     chown 600 "$SERVER_CONFIG_FILE"
 else
-    echo "Provide all arguments"
     echo "Usage: gen_serverconfig.sh <server_ip> <server_port> <server_privatekey> <server_network> <server_config_file>"
 fi

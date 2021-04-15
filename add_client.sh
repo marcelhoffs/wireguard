@@ -74,21 +74,6 @@ get_data() {
 
 # ---------------------------------
 
-update_server_config() {
-    NAME=$1
-
-    # Update server config file
-    echo "> Updating server configuration file: ""$SERVER_CONFIG_FILE"
-
-    echo "" >>"$SERVER_CONFIG_FILE"
-    echo "[Peer]" >>"$SERVER_CONFIG_FILE"
-    echo "# ""$NAME" >>"$SERVER_CONFIG_FILE"
-    echo "PublicKey = ""$CLIENT_PUBLIC_KEY" >>"$SERVER_CONFIG_FILE"
-    echo "AllowedIPs = ""$CLIENT_IP""/32" >>"$SERVER_CONFIG_FILE"
-}
-
-# ---------------------------------
-
 generate_client_config() {
     NAME=$1
 
@@ -152,6 +137,6 @@ setup_questions
 generate_client_keys "$CLIENT_NAME"
 get_data "$CLIENT_NAME"
 determine_ip
-update_server_config "$CLIENT_NAME"
+./library/add_client_to_server.sh "$CLIENT_NAME" "$CLIENT_PUBLIC_KEY" "$CLIENT_IP" "$SERVER_CONFIG_FILE"
 generate_client_config "$CLIENT_NAME"
 generate_qr_code "$CLIENT_NAME"
