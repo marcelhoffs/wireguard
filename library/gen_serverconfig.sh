@@ -10,12 +10,14 @@ if [ $# -eq 5 ]; then
     # Generate the server configuration file
     echo " > Generating server configuration file: ""$SERVER_CONFIG_FILE"
 
-    echo "[Interface]" >"$SERVER_CONFIG_FILE"
-    echo "Address = ""$SERVER_IP" >>"$SERVER_CONFIG_FILE"
-    echo "ListenPort = ""$SERVER_PORT" >>"$SERVER_CONFIG_FILE"
-    echo "PrivateKey = ""$SERVER_PRIVATE_KEY" >>"$SERVER_CONFIG_FILE"
-    echo "PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >>"$SERVER_CONFIG_FILE"
-    echo "PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >>"$SERVER_CONFIG_FILE"
+    cat > "$SERVER_CONFIG_FILE" << EOF
+    [Interface]
+    Address = $SERVER_IP
+    ListenPort = $SERVER_PORT
+    PrivateKey = $SERVER_PRIVATE_KEY
+    PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o $SERVER_NETWORK -j MASQUERADE
+    PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o $SERVER_NETWORK -j MASQUERADE
+    EOF
 
     chown 600 "$SERVER_CONFIG_FILE"
 else
