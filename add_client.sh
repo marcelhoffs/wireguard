@@ -20,16 +20,16 @@ init() {
 
 setup_questions() {
     echo ''
-    echo -e ' ╔════════════════════════════════════════╗'
-    echo -e ' ║ WireGuard server configurator          ║'
-    echo -e ' ║ Marcel Hoffs, 13.04.2021               ║'
-    echo -e ' ║ Version 1.0                            ║'
-    echo -e ' ╚════════════════════════════════════════╝'
+    echo -e '╔════════════════════════════════════════╗'
+    echo -e '║ WireGuard server configurator          ║'
+    echo -e '║ Marcel Hoffs, 13.04.2021               ║'
+    echo -e '║ Version 1.0                            ║'
+    echo -e '╚════════════════════════════════════════╝'
     echo ''
 
     # Client name
     while [ "$CLIENT_NAME" == '' ]; do
-        read -r -p ' Client name [e.g. THINKPAD] : ' CLIENT_NAME
+        read -r -p 'Client name [e.g. THINKPAD] : ' CLIENT_NAME
         CLIENT_NAME=${CLIENT_NAME,,}
     done
 
@@ -78,7 +78,7 @@ update_server_config() {
     NAME=$1
 
     # Update server config file
-    echo " > Updating server configuration file: ""$SERVER_CONFIG_FILE"
+    echo "> Updating server configuration file: ""$SERVER_CONFIG_FILE"
 
     echo "" >>"$SERVER_CONFIG_FILE"
     echo "[Peer]" >>"$SERVER_CONFIG_FILE"
@@ -95,7 +95,7 @@ generate_client_config() {
     # Generating client config
     CLIENT_CONFIG_FILE="$NAME"".conf"
     FULL_CLIENT_CONFIG_FILE="client/""$CLIENT_CONFIG_FILE"
-    echo " > Generating client config file: config/""$CLIENT_CONFIG_FILE"
+    echo "> Generating client config file: config/""$CLIENT_CONFIG_FILE"
 
     echo "[Interface]" >"$FULL_CLIENT_CONFIG_FILE"
     echo "PrivateKey = ""$CLIENT_PRIVATE_KEY" >>"$FULL_CLIENT_CONFIG_FILE"

@@ -34,43 +34,43 @@ init() {
 
 setup_questions() {
   echo ''
-  echo -e ' ╔════════════════════════════════════════╗'
-  echo -e ' ║ WireGuard server configurator          ║'
-  echo -e ' ║ Marcel Hoffs, 13.04.2021               ║'
-  echo -e ' ║ Version 1.0                            ║'
-  echo -e ' ╚════════════════════════════════════════╝'
+  echo -e '╔════════════════════════════════════════╗'
+  echo -e '║ WireGuard server configurator          ║'
+  echo -e '║ Marcel Hoffs, 13.04.2021               ║'
+  echo -e '║ Version 1.0                            ║'
+  echo -e '╚════════════════════════════════════════╝'
   echo ''
 
   # Server IP address
   while [ "$SERVER_IP" == '' ]; do
-    read -r -p ' 1)  Server IP address [e.g. 10.0.0.1] : ' SERVER_IP
+    read -r -p '1)  Server IP address [e.g. 10.0.0.1] : ' SERVER_IP
   done
 
   # Server Port
   while [ "$SERVER_PORT" == '' ]; do
-    read -r -p ' 2)  Listening port [e.g. 51820] : ' SERVER_PORT
+    read -r -p '2)  Listening port [e.g. 51820] : ' SERVER_PORT
   done
 
   # Network interface
   while [ "$SERVER_NETWORK" == '' ]; do
-    read -r -p ' 3)  Network interface [e.g. eth0] : ' SERVER_NETWORK
+    read -r -p '3)  Network interface [e.g. eth0] : ' SERVER_NETWORK
     SERVER_NETWORK=${SERVER_NETWORK,,}
   done
 
   # DNS
   while [ "$DNS" == '' ]; do
-    read -r -p ' 4)  What DNS to use [e.g. 1.1.1.1] : ' DNS
+    read -r -p '4)  What DNS to use [e.g. 1.1.1.1] : ' DNS
   done
 
   # End Point
   while [ "$END_POINT" == '' ]; do
-    read -r -p ' 5)  End point [e.g. vpn.example.com, an ip address] : ' END_POINT
+    read -r -p '5)  End point [e.g. vpn.example.com, an ip address] : ' END_POINT
     END_POINT=${END_POINT,,}
   done
 
   # End Point port
   while [ "$END_POINT_PORT" == '' ]; do
-    read -r -p ' 6)  End point port [e.g. 4000] : ' END_POINT_PORT
+    read -r -p '6)  End point port [e.g. 4000] : ' END_POINT_PORT
     END_POINT_PORT=${END_POINT_PORT,,}
   done
 
@@ -81,7 +81,7 @@ setup_questions() {
 
 store_config() {
   # Store config
-  echo " > Storing configuration in config directory"
+  echo "> Storing configuration in config directory"
 
   # Store server IP in file
   echo "$SERVER_IP" >config/server_ip
@@ -122,22 +122,6 @@ generate_server_keys() {
 }
 
 # ---------------------------------
-
-generate_server_config() {
-  # Generate the server configuration file
-  echo " > Generating server configuration file: ""$SERVER_CONFIG_FILE"
-
-  echo "[Interface]" >"$SERVER_CONFIG_FILE"
-  echo "Address = ""$SERVER_IP" >>"$SERVER_CONFIG_FILE"
-  echo "ListenPort = ""$SERVER_PORT" >>"$SERVER_CONFIG_FILE"
-  echo "PrivateKey = ""$SERVER_PRIVATE_KEY" >>"$SERVER_CONFIG_FILE"
-  echo "PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >>"$SERVER_CONFIG_FILE"
-  echo "PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o ""$SERVER_NETWORK"" -j MASQUERADE" >>"$SERVER_CONFIG_FILE"
-
-  chown 600 "$SERVER_CONFIG_FILE"
-}
-
-# ---------------------------------
 # Main
 # ---------------------------------
 
@@ -145,5 +129,5 @@ init
 setup_questions
 store_config
 generate_server_keys
-generate_server_config
+./library/gen_serverconfig.sh "$SERVER_IP" "$SERVER_PORT" "$SERVER_PRIVATE_KEY" "$SERVER_NETWORK" "$SERVER_CONFIG_FILE"
 echo ''
