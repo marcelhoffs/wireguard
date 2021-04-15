@@ -29,7 +29,7 @@ setup_questions() {
 
     # Client name
     while [ "$CLIENT_NAME" == '' ]; do
-        read -r -p 'Client name [e.g. THINKPAD] : ' CLIENT_NAME
+        read -r -p 'Client name [e.g. laptop] : ' CLIENT_NAME
         CLIENT_NAME=${CLIENT_NAME,,}
     done
 
@@ -77,21 +77,12 @@ get_data() {
 generate_client_config() {
     NAME=$1
 
-    # Generating client config
+    # Determine name of config file
     CLIENT_CONFIG_FILE="$NAME"".conf"
     FULL_CLIENT_CONFIG_FILE="client/""$CLIENT_CONFIG_FILE"
-    echo "> Generating client config file: config/""$CLIENT_CONFIG_FILE"
-
-    echo "[Interface]" >"$FULL_CLIENT_CONFIG_FILE"
-    echo "PrivateKey = ""$CLIENT_PRIVATE_KEY" >>"$FULL_CLIENT_CONFIG_FILE"
-    echo "Address = ""$CLIENT_IP""/32" >>"$FULL_CLIENT_CONFIG_FILE"
-    echo "DNS = ""$DNS" >>"$FULL_CLIENT_CONFIG_FILE"
-    echo "" >>"$FULL_CLIENT_CONFIG_FILE"
-    echo "[Peer]" >>"$FULL_CLIENT_CONFIG_FILE"
-    echo "AllowedIPs = 0.0.0.0/0, ::/0" >>"$FULL_CLIENT_CONFIG_FILE"
-    echo "Endpoint = ""$END_POINT" >>"$FULL_CLIENT_CONFIG_FILE"
-
-    chmod 600 "$FULL_CLIENT_CONFIG_FILE"
+ 
+    # Generating client config
+    ./library/gen_client_config.sh "$CLIENT_PRIVATE_KEY" "$CLIENT_IP" "$DNS" "$END_POINT" "$FULL_CLIENT_CONFIG_FILE"
 }
 
 # ---------------------------------
