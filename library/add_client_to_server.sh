@@ -18,7 +18,7 @@ EOL
 # Main
 # ---------------------------------
 
-if [ $# -eq 5 ]; then
+if [ $# -eq 4 ]; then
     # Arguments
     CLIENT_NAME=$1
     CLIENT_PUBLIC_KEY=$2
