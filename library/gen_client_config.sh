@@ -5,7 +5,7 @@
 # ---------------------------------
 
 generate_client_config() {
-    cat >>"$SERVER_CONFIG_FILE" <<EOL
+    cat >>"$CLIENT_CONFIG_FILE" <<EOL
 
 [Interface]
 PrivateKey = ${CLIENT_PRIVATE_KEY}
