@@ -103,6 +103,9 @@ store_config() {
   # Store network interface
   echo "$SERVER_NETWORK" >config/server_network
 
+  # Store interface name
+  echo "$INTERFACE_NAME" >config/interface
+  
   # Store server config file
   echo "$SERVER_CONFIG_FILE" >config/server_config_file
 

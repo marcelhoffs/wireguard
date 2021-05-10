@@ -15,6 +15,16 @@ EOL
 }
 
 # ---------------------------------
+
+restart_service() {
+  # Get DNS
+  INTERFACE=$(<"config/interface")
+  
+  # Restart the WireGuard service
+  systemctl restart wg-quick@"$INTERFACE" 
+}
+
+# ---------------------------------
 # Main
 # ---------------------------------
 
@@ -28,6 +38,7 @@ if [ $# -eq 4 ]; then
     # Generate the server configuration file
     echo "> Updating server configuration file: ""$SERVER_CONFIG_FILE"
     update_server_config
+    restart_service
 else
     echo "Usage: add_client_to_server.sh <client_name> <client_public_key> <client_ip> <server_config_file>"
 fi
