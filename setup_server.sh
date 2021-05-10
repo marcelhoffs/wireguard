@@ -4,7 +4,8 @@
 # Variables
 # ---------------------------------
 
-SERVER_CONFIG_FILE='wg0.conf'
+INTERFACE_NAME='wg0'
+SERVER_CONFIG_FILE="$INTERFACE_NAME"'.conf'
 SERVER_IP=''
 SERVER_PORT=''
 SERVER_NETWORK=''
@@ -14,6 +15,13 @@ END_POINT_PORT=''
 
 # ---------------------------------
 # Functions
+# ---------------------------------
+
+install() {
+  # Install the needed packages for WireGuard
+  pacman --noconfirm -S wireguard-tools openresolv qrencode
+}
+
 # ---------------------------------
 
 init() {
@@ -122,12 +130,32 @@ generate_server_keys() {
 }
 
 # ---------------------------------
+
+enable_ip_forwarding() {
+    cat >> /etc/sysctl.d/30-ipforward.conf <<EOL
+net.ipv4.ip_forward=1
+net.ipv6.conf.default.forwarding=1
+net.ipv6.conf.all.forwarding=1
+EOL
+}
+
+# ---------------------------------
+
+enable_wireguard_service() {
+  # Enable WireGuard systemd service
+  systemctl enable --now wg-quick@"$INTERFACE_NAME"
+}
+
+# ---------------------------------
 # Main
 # ---------------------------------
 
+install
 init
 setup_questions
 store_config
 generate_server_keys
 ./library/gen_serverconfig.sh "$SERVER_IP" "$SERVER_PORT" "$SERVER_PRIVATE_KEY" "$SERVER_NETWORK" "$SERVER_CONFIG_FILE"
+enable_ip_forwarding
+enable_wireguard_service
 echo ''
