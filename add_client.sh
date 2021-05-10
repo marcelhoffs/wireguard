@@ -82,7 +82,7 @@ generate_client_config() {
     FULL_CLIENT_CONFIG_FILE="client/""$CLIENT_CONFIG_FILE"
  
     # Generating client config
-    ./library/gen_client_config.sh "$CLIENT_PRIVATE_KEY" "$CLIENT_IP" "$DNS" "$END_POINT" "$FULL_CLIENT_CONFIG_FILE"
+    ./library/gen_client_config.sh "$SERVER_PUBLIC_KEY" "$CLIENT_PRIVATE_KEY" "$CLIENT_IP" "$DNS" "$END_POINT" "$FULL_CLIENT_CONFIG_FILE"
 }
 
 # ---------------------------------
