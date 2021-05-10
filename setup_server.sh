@@ -132,7 +132,10 @@ generate_server_keys() {
 # ---------------------------------
 
 enable_ip_forwarding() {
-    cat >> /etc/sysctl.d/30-ipforward.conf <<EOL
+  # Enable IP forwarding
+  echo "> Storing configuration in config directory"
+  
+  cat >> /etc/sysctl.d/30-ipforward.conf <<EOL
 net.ipv4.ip_forward=1
 net.ipv6.conf.default.forwarding=1
 net.ipv6.conf.all.forwarding=1
@@ -143,6 +146,7 @@ EOL
 
 enable_wireguard_service() {
   # Enable WireGuard systemd service
+  echo "> Enabling WireGuard service"
   systemctl enable --now wg-quick@"$INTERFACE_NAME"
 }
 
