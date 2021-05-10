@@ -23,7 +23,7 @@ EOL
 # Main
 # ---------------------------------
 
-if [ $# -eq 5 ]; then
+if [ $# -eq 6 ]; then
     # Arguments
     SERVER_PUBLIC_KEY=$1
     CLIENT_PRIVATE_KEY=$2
