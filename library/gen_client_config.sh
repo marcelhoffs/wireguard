@@ -6,7 +6,6 @@
 
 generate_client_config() {
     cat >>"$CLIENT_CONFIG_FILE" <<EOL
-
 [Interface]
 PrivateKey = ${CLIENT_PRIVATE_KEY}
 Address = ${CLIENT_IP}/32
